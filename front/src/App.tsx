@@ -1,35 +1,48 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-function App() {
-  const [count, setCount] = useState(0)
+// HOC проверяет аутентификацию пользователя
+import RequireAuth from './user/hoc/RequireAuth';
+// контекстный компонент, который предоставляет информацию об аутентификации (токен пользователя) через контекст
+import AuthProvider from './user/hoc/AuthProvider';
 
+import PublicLayout from './user/components/PublicLayout/PublicLayout';
+import Home from './user/pages/Home/Home';
+import Contacts from './user/pages/Contacts/Contacts';
+import Faq from './user/pages/Faq/Faq';
+import Agreement from './user/pages/Agreement/Agreement';
+import Contract from './user/pages/Contract/Contract';
+import Register from './user/pages/Register/Register';
+import Login from './user/pages/Login/Login';
+import Forgot from './user/pages/Forgot/Forgot';
+import Profile from './user/pages/Profile/Profile';
+
+import './App.css';
+
+const App: React.FC = () => {
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="App dark:bg-gray-900">
+      <AuthProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<PublicLayout />}>
+              <Route index element={<Home />} />
+              <Route path="contacts" element={<Contacts />} />
+              <Route path="faq" element={<Faq />} />
+              <Route path="agreement" element={<Agreement />} />
+              <Route path="contract" element={<Contract />} />
+              <Route path="register" element={<Register />} />
+              <Route path="login" element={<Login />} />
+              <Route path="forgot" element={<Forgot />} />
+              <Route path="profile" element={
+                <RequireAuth><Profile /></RequireAuth>
+              } />
+            </Route>
+          </Routes>
+        </Router>
+      </AuthProvider>
+    </div>
+  );
+};
 
-export default App
+export default App;

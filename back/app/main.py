@@ -6,7 +6,7 @@ from app.service.public.auth_service import generate_role  # импортиру�
 
 # origins - список источников, с которых можно получать запросы
 origins = [
-    "http://localhost:3000"
+    "http://localhost:5173"
 ]
 
 
