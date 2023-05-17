@@ -16,6 +16,10 @@ import Register from './user/pages/Register/Register';
 import Login from './user/pages/Login/Login';
 import Forgot from './user/pages/Forgot/Forgot';
 import Profile from './user/pages/Profile/Profile';
+import NotFound from './user/pages/NotFound/NotFound'; // страница 404 
+
+import AdminLayout from './admin/components/AdminLayout/AdminLayout';
+import Users from './admin/pages/Users/Users';
 
 import './App.css';
 
@@ -36,6 +40,12 @@ const App: React.FC = () => {
               <Route path="forgot" element={<Forgot />} />
               <Route path="profile" element={
                 <RequireAuth><Profile /></RequireAuth>
+              } />
+              <Route path="*" element={<NotFound />} /> {/* страница 404  */}
+            </Route>
+            <Route path="/admin/" element={<AdminLayout />}>
+              <Route path="users" element={
+                <RequireAuth><Users /></RequireAuth>
               } />
             </Route>
           </Routes>
